@@ -110,7 +110,10 @@ ifeq ($(OS), Windows_NT)
 else
 	mkdir -p $(BUILD_PATH)
 endif
-	$(CXX) $(COBJECTS) $(CXXOBJECTS) $(CCOBJECTS) -o $(BUILD_PATH)/$(NAME) $(LDFLAGS)
+	ar -crv $(BUILD_PATH)/ar1.a $(COBJECTS)
+	ar -crv $(BUILD_PATH)/ar2.a $(CXXOBJECTS)
+	ar -crv $(BUILD_PATH)/ar3.a $(CCOBJECTS)
+	$(CXX) $(BUILD_PATH)/AR1.a $(BUILD_PATH)/AR2.a $(BUILD_PATH)/AR3.a -o $(BUILD_PATH)/$(NAME) $(LDFLAGS)
 
 # Remove compiled object files
 .PHONY: clean

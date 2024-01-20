@@ -4,14 +4,9 @@
 
 // Callback function declaration
 static int get_signal_data(size_t offset, size_t length, float *out_ptr);
-
-// Raw features copied from test sample
-static const float features[] = {
-    // Copy raw features here (e.g. from the 'Model testing' page)
-};
-
-int main(int argc, char **argv) {
-
+float features={};
+void run_model(float features[])
+{
     signal_t signal;            // Wrapper for raw input buffer
     ei_impulse_result_t result; // Used to store inference output
     EI_IMPULSE_ERROR res;       // Return code from inference
@@ -25,7 +20,7 @@ int main(int argc, char **argv) {
         ei_printf("Expected %d items, but got %d\r\n",
                 EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE,
                 (int)buf_len);
-        return 1;
+        // return 1;
     }
 
     // Assign callback function to fill buffer used for preprocessing/inference
@@ -73,7 +68,6 @@ int main(int argc, char **argv) {
     ei_printf("Anomaly prediction: %.3f\r\n", result.anomaly);
 #endif
 
-    return 0;
 }
 
 // Callback: fill a section of the out_ptr buffer when requested
@@ -81,6 +75,15 @@ static int get_signal_data(size_t offset, size_t length, float *out_ptr) {
     for (size_t i = 0; i < length; i++) {
         out_ptr[i] = (features + offset)[i];
     }
+}
 
+// Raw features copied from test sample
+
+int main(int argc, char **argv) {
+// run_model(features);
+   
+   
     return EIDSP_OK;
 }
+
+
